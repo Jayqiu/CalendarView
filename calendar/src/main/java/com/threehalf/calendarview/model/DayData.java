@@ -8,6 +8,15 @@ public class DayData {
     private DateData date;
     private int textColor;
     private int textSize;
+    private int select;
+
+    public int getSelect() {
+        return select;
+    }
+
+    public void setSelect(int select) {
+        this.select = select;
+    }
 
     public DayData(DateData date){
         this.date = date;

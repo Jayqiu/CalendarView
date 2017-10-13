@@ -39,11 +39,15 @@ public class MarkedDates extends Observable {
     public MarkedDates add(DateData dateData){
         data.add(dateData);
         this.setChanged();
+        notifyObservers();
         return this;
     }
     public MarkedDates addAll(ArrayList<DateData> dateData){
-        data.addAll(dateData);
+        if(dateData!=null&& dateData.size()>0){
+            data.addAll(dateData);
+        }
         this.setChanged();
+        notifyObservers();
         return this;
     }
     public ArrayList<DateData> getAll(){
@@ -52,6 +56,7 @@ public class MarkedDates extends Observable {
 
     public MarkedDates removeAdd(){
         data.clear();
+        notifyObservers();
         return this;
     }
 }

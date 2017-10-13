@@ -45,39 +45,22 @@ public class CalendarAdapter extends ArrayAdapter implements Observer {
         View ret = null;
         DayData dayData = (DayData) data.get(position);
         MarkStyle style = MarkedDates.getInstance().check(dayData.getDate());
-        boolean marked = style != null;
-        if (marked){
-            dayData.getDate().setMarkStyle(style);
-            if (markView > 0){
-                BaseMarkView baseMarkView = (BaseMarkView) View.inflate(getContext(), markView, null);
-                baseMarkView.setDisplayText(dayData);
-                ret = baseMarkView;
-            } else {
-                ret = new DefaultMarkView(getContext());// 默认 MarkView
-                ((DefaultMarkView) ret).setDisplayText(dayData);
 
-            }
-            if (OnDateClickListener.instance != null) {
-                ((BaseMarkView) ret).setOnDateClickListener(OnDateClickListener.instance);
-            }
+
+        dayData.getDate().setMarkStyle(style);
+        if (markView > 0){
+            BaseMarkView baseMarkView = (BaseMarkView) View.inflate(getContext(), markView, null);
+            baseMarkView.setDisplayText(dayData);
+            ret = baseMarkView;
         } else {
-            if (cellView > 0) {
-                BaseCellView baseCellView = (BaseCellView) View.inflate(getContext(), cellView, null);
-                baseCellView.setDisplayText(dayData);
-                ret = baseCellView;
-            } else {
-                ret = new DefaultCellView(getContext());// 默认 CellView
-                ((DefaultCellView) ret).setDisplayText(dayData);
-            }
-            if (OnDateClickListener.instance != null) {
-                ((BaseCellView) ret).setOnDateClickListener(OnDateClickListener.instance);
-            }
+            ret = new DefaultMarkView(getContext());// 默认 MarkView
+            ((DefaultMarkView) ret).setDisplayText(dayData);
+
+        }
+        if (OnDateClickListener.instance != null) {
+            ((BaseMarkView) ret).setOnDateClickListener(OnDateClickListener.instance);
         }
         ((BaseCellView) ret).setDate(dayData.getDate());
-
-        if (dayData.getDate().equals(CurrentCalendar.getCurrentDateData())){
-            ret.setBackground(MarkStyle.todayBackground);
-        }
         return ret;
     }
 

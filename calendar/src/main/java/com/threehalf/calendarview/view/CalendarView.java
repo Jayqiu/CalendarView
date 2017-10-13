@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.threehalf.calendarview.CellConfig;
@@ -12,6 +13,7 @@ import com.threehalf.calendarview.MarkStyle;
 import com.threehalf.calendarview.R;
 import com.threehalf.calendarview.adpter.CalendarViewFragmentAdapter;
 import com.threehalf.calendarview.listener.OnDateClickListener;
+import com.threehalf.calendarview.listener.OnExpDateClickListener;
 import com.threehalf.calendarview.listener.OnMonthChangeListener;
 import com.threehalf.calendarview.listener.OnMonthScrollListener;
 import com.threehalf.calendarview.model.DateData;
@@ -37,7 +39,7 @@ public class CalendarView extends ViewPager {
     private int markedCellResId = -1;
     private View markedCellView = null;
     private boolean hasTitle = true;
-
+    private boolean scrollble = true;
     private boolean initted = false;
 
     private DateData currentDate;
@@ -77,6 +79,7 @@ public class CalendarView extends ViewPager {
         adapter = new CalendarViewFragmentAdapter(activity.getSupportFragmentManager()).setDate(currentDate);
         adapter.setPositionCount(positionCount);
         this.setAdapter(adapter);
+        setOffscreenPageLimit(positionCount);
         setSlideType();
         float density = getContext().getResources().getSystem().getDisplayMetrics().density;
         CellConfig.cellHeight = getContext().getResources().getSystem().getDisplayMetrics().widthPixels / 7 / density;
@@ -105,9 +108,9 @@ public class CalendarView extends ViewPager {
     }
 
     public CalendarView travelTo(DateData dateData) {
-        int tmpePosition ;
-        Calendar    calendar = Calendar.getInstance();
-        calendar.set(dateData.getYear(),dateData.getMonth()-1,dateData.getDay());
+        int tmpePosition;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(dateData.getYear(), dateData.getMonth() - 1, dateData.getDay());
         tmpePosition = positionCount / 2;
         if (dateData != null) {
             switch (slideType) {
@@ -118,7 +121,7 @@ public class CalendarView extends ViewPager {
                     break;
                 case ONLY_RIGHT:
                     if (positionCount % 2 == 0) {// 偶数 取前一个月
-                        calendar.add(Calendar.MONTH, -tmpePosition+1);
+                        calendar.add(Calendar.MONTH, -tmpePosition + 1);
                     } else {
                         calendar.add(Calendar.MONTH, -tmpePosition);
                     }
@@ -128,7 +131,7 @@ public class CalendarView extends ViewPager {
             }
 
         }
-        dateData = new DateData(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+        dateData = new DateData(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         this.currentDate = dateData;
         CalendarUtil.date = dateData;
         this.initted = false;
@@ -141,11 +144,12 @@ public class CalendarView extends ViewPager {
         init((FragmentActivity) getContext());
         return this;
     }
-    public static   String  time(Calendar calendar){
+
+    public static String time(Calendar calendar) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(calendar.getTime());
-        Log.e("TIME=","==========:"+dateString);
-        return  dateString;
+        Log.e("TIME=", "==========:" + dateString);
+        return dateString;
     }
 
     /**
@@ -182,6 +186,7 @@ public class CalendarView extends ViewPager {
      */
     public CalendarView markDate(DateData date) {
         MarkedDates.getInstance().add(date);
+
         return this;
     }
 
@@ -204,6 +209,16 @@ public class CalendarView extends ViewPager {
      */
     public CalendarView unMarkDate(DateData date) {
         MarkedDates.getInstance().remove(date);
+        return this;
+    }
+
+    /**
+     * 全部清除
+     *
+     * @return
+     */
+    public CalendarView unMarkAll() {
+        MarkedDates.getInstance().removeAdd();
         return this;
     }
 
@@ -276,7 +291,7 @@ public class CalendarView extends ViewPager {
         requestLayout();
     }
 
-    private int positionCount = 1000;
+    private int positionCount = 12;
 
     public void setSlideType(SlideType slideType) {
         this.slideType = slideType;
@@ -290,6 +305,11 @@ public class CalendarView extends ViewPager {
     public enum SlideType {
         ONLY_LEFT, ONLY_RIGHT, ALLSLIDING
 
+    }
+    public  void onDestroy(){
+        MarkedDates.getInstance().removeAdd();
+        OnExpDateClickListener.lastMarkView=null;
+        OnExpDateClickListener.lastMarkClickedDate= CurrentCalendar.getCurrentDateData();
     }
 
 
@@ -339,5 +359,30 @@ public class CalendarView extends ViewPager {
             return (int) CellConfig.cellHeight;
         }
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (!scrollble) {
+            return false;
+        }
+        return super.onTouchEvent(ev);
+    }
+
+    public boolean isScrollble() {
+        return scrollble;
+    }
+
+    public void setScrollble(boolean scrollble) {
+        this.scrollble = scrollble;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent arg0) {
+        if (!scrollble)
+            return false;
+        else
+            return super.onInterceptTouchEvent(arg0);
+    }
+
+
 }
 

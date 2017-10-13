@@ -19,6 +19,7 @@ public class ExpCalendarUtil {
      * @param number - Number day of Week (on the code Sunday is equal 7)
      * @return [String] - abbreviated name of the days of the week
      */
+   private static String [] week={"日","一","二","三","四","五","六"};
     public static String number2Week(int number) {
         if (number < 1 || number > 7) return null; //Day of Week 1-7
         if (number == 7) {
@@ -30,7 +31,17 @@ public class ExpCalendarUtil {
         final String nameDayOfWeek = symbols.getShortWeekdays()[number]; //Short name or getWeekdays for complete name
         return nameDayOfWeek.toUpperCase(); //name to uppercase
     }
+    public static String number2WeekByChinese(int number) {
+        if (number < 1 || number > 7) return null; //Day of Week 1-7
+        if (number == 7) {
+            number = 1;
+        } else {
+            number = number + 1;
+        }
 
+
+        return week[number-1]; //name to uppercase
+    }
     public static DateData position2Month(int absPos) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(CellConfig.m2wPointDate.getYear(), CellConfig.m2wPointDate.getMonth() - 1, CellConfig.m2wPointDate.getDay());

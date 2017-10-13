@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
 //        mTvTitle.setText(2017+"年"+4+"月");
 
         expCalendarView.markDate(new DateData(2016, 8, 2).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED, true)));
-//        expCalendarView.markDate(new DateData(2017, 6, 3).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,false)));
-//        expCalendarView.markDate(new DateData(2017, 7, 7).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,false)));
-//        expCalendarView.travelTo(new DateData(2017, 8, 31));
+        expCalendarView.markDate(new DateData(2017, 6, 3).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,false)));
+        expCalendarView.markDate(new DateData(2017, 7, 7).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,false)));
+        expCalendarView.travelTo(new DateData(2017, 8, 31));
         expCalendarView.setOnDateClickListener(new OnExpDateClickListener() {
             @Override
             public void onDateClick(View view, DateData date) {

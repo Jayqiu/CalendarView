@@ -19,7 +19,6 @@ public class MonthFragment extends Fragment {
     private int pagePosition ;
 
     private MonthView monthView;
-    private boolean ifExpand = false;
 
     public void setData(int pagePosition, int cellView, int markView) {
         this.pagePosition = pagePosition;
@@ -32,11 +31,9 @@ public class MonthFragment extends Fragment {
         LinearLayout ret = new LinearLayout(getContext());
         ret.setBackgroundColor(Color.WHITE);
         ret.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
         monthView = new MonthView(getContext());
         monthView.initMonthAdapter(pagePosition, cellView, markView);
         ret.addView(monthView);
-
         return ret;
     }
 

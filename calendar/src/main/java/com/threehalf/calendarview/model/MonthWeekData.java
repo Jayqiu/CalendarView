@@ -13,7 +13,6 @@ import java.util.Calendar;
 
 
 /**
- * Created by Bigflower on 2015/12/8.
  */
 public class MonthWeekData {
     private DateData pointDate;

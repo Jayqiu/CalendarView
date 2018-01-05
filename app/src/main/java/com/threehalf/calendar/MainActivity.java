@@ -39,13 +39,14 @@ public class MainActivity extends AppCompatActivity {
         mTvRight = (TextView) findViewById(R.id.tv_right);
         mTvTitle = (TextView) findViewById(R.id.tv_time);
 
-        expCalendarView.setSlideType(CalendarView.SlideType.ONLY_RIGHT);
+        expCalendarView.setSlideType(CalendarView.SlideType.ALLSLIDING);
 //        mTvTitle.setText(2017+"年"+4+"月");
 
-        expCalendarView.markDate(new DateData(2016, 8, 2).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED, true)));
-        expCalendarView.markDate(new DateData(2017, 6, 3).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,false)));
-        expCalendarView.markDate(new DateData(2017, 7, 7).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,false)));
-        expCalendarView.travelTo(new DateData(2017, 8, 31));
+        expCalendarView.markDate(new DateData(2018, 1, 2).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED, false)));
+        expCalendarView.markDate(new DateData(2018, 2, 2).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE, true)));
+        expCalendarView.markDate(new DateData(2017, 12, 3).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,true)));
+        expCalendarView.markDate(new DateData(2017, 11, 7).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED,true)));
+        expCalendarView.travelTo(new DateData(2018, 1, 20));
         expCalendarView.setOnDateClickListener(new OnExpDateClickListener() {
             @Override
             public void onDateClick(View view, DateData date) {

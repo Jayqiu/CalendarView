@@ -1,5 +1,5 @@
 #CalendarView日历选择器
-
+![](https://github.com/Jayqiu/CalendarView/blob/master/GIF.gif)
 ### 1.设置模式 CalendarView.SlideType.
 	CalendarView.setSlideType(CalendarView.SlideType.ALLSLIDING);
 

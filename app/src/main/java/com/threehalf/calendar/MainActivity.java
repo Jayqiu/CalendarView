@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mTvTitle = (TextView) findViewById(R.id.tv_time);
 
         expCalendarView.setSlideType(CalendarView.SlideType.ALLSLIDING);
+
 //        mTvTitle.setText(2017+"年"+4+"月");
 
         expCalendarView.markDate(new DateData(2018, 1, 2).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED, false)));

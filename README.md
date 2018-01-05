@@ -69,4 +69,8 @@ CalendarView.setOnMonthScrollListener(new OnMonthScrollListener() {
 	CalendarView.setPositionCount(2);
 	移动到指定的日子
 	CalendarView.travelTo(new DateData(2015, 8, 31));
+	//设置是否可以左右滑动
+	public void setScrollble(boolean scrollble) {
+            this.scrollble = scrollble;
+        }
 
